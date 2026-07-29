@@ -782,6 +782,52 @@
       .detail-section { gap: 20px; }
       .modal-details { gap: 24px; }
     }
+/* ---------- Custom cursor ---------- */
+.cursor-dot, .cursor-ring{
+  position:fixed;top:0;left:0;pointer-events:none;z-index:9999;
+  border-radius:50%;transform:translate(-50%,-50%);
+}
+.cursor-dot{width:6px;height:6px;background:var(--sky);box-shadow:0 0 10px var(--sky);}
+.cursor-ring{width:34px;height:34px;border:1px solid var(--sky-dim);transition:width .2s,height .2s,border-color .2s, background .2s;}
+.cursor-ring.hover{width:56px;height:56px;border-color:var(--violet);background:rgba(155,92,255,.08);}
+.cursor-trail{
+  position:fixed;top:0;left:0;width:5px;height:5px;border-radius:50%;
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  animation:trailFade .8s ease-out forwards;
+}
+@keyframes trailFade{
+  0%{opacity:.85;transform:translate(-50%,-50%) scale(1);}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(.15);}
+}
+@media (hover:none){ .cursor-dot,.cursor-ring,.cursor-trail{display:none;} }
+ 
+    
+.scroll-cue{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;color:var(--muted-2);
+  font-family:var(--font-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  z-index:3;
+}
+.scroll-track{
+  position:relative;width:1px;height:42px;
+  background:linear-gradient(var(--line-bright), transparent);
+  overflow:visible;
+}
+.scroll-dot{
+  position:absolute;left:50%;top:-18px;width:6px;height:6px;margin-left:-3px;
+  border-radius:50%;
+  background:radial-gradient(circle, #fff, var(--sky));
+  box-shadow:0 0 10px var(--sky), 0 0 20px var(--violet-dim);
+  animation:scrollDot 2s cubic-bezier(.6,0,.4,1) infinite;
+}
+@keyframes scrollDot{
+  0%{top:-18px;opacity:0;}
+  15%{opacity:1;}
+  80%{opacity:1;}
+  100%{top:42px;opacity:0;}
+}
+   
   </style>
  </head>
  <body class="h-full">
@@ -849,6 +895,10 @@
       <a href="Img/Resume.pdf" download="Vaishnavi_Kanade_Resume.pdf" class="px-8 py-4 border-2 border-purple-500/50 rounded-xl font-semibold hover:bg-purple-500/10 transition-all">Download Resume</a>
      </div>
     </div>
+    <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-track"><div class="scroll-dot"></div></div>
+  </div>
    </section>
 
    <!-- About Section -->
