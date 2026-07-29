@@ -922,6 +922,53 @@
         display:none;
     }
 }
+   //background 
+   .hero-grid{
+    position:absolute;
+    inset:0;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+background:
+    radial-gradient(circle at 20% 30%, rgba(139,92,246,.25), transparent 35%),
+
+    radial-gradient(circle at 80% 70%, rgba(6,182,212,.18), transparent 40%),
+
+    #09090f;
+    background-size:60px 60px;
+
+    mask-image:radial-gradient(circle,white 20%,transparent 90%);
+}
+
+   //Tiny Glowing Dots
+   .micro-particles{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+}
+
+.micro-particles span{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:#fff;
+    border-radius:50%;
+    opacity:.5;
+    animation:floatDots 12s linear infinite;
+}
+
+@keyframes floatDots{
+
+    from{
+        transform:translateY(100vh);
+    }
+
+    to{
+        transform:translateY(-100px);
+    }
+
+}
   </style>
   
  </head>
@@ -965,7 +1012,8 @@
 
    <!-- Hero Section -->
    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-    <div class="hero-bg">
+    <div class="hero-grid">
+     <div class="micro-particles">
      <div class="gradient-orb orb-1"></div>
      <div class="gradient-orb orb-2"></div>
      <div class="gradient-orb orb-3"></div>
@@ -997,6 +1045,7 @@
     <div class="scroll-track">
         <div class="scroll-dot"></div>
     </div>
+    </dive>
 </div>
    </section>
 
@@ -1852,6 +1901,33 @@
   </div>
 
   <script>
+   //Tiny Glowing Dots
+   const container=document.querySelector(".micro-particles");
+
+for(let i=0;i<120;i++){
+
+    const dot=document.createElement("span");
+
+    dot.style.left=Math.random()*100+"%";
+    dot.style.animationDelay=Math.random()*12+"s";
+    dot.style.animationDuration=8+Math.random()*10+"s";
+
+    container.appendChild(dot);
+
+}const container=document.querySelector(".micro-particles");
+
+for(let i=0;i<120;i++){
+
+    const dot=document.createElement("span");
+
+    dot.style.left=Math.random()*100+"%";
+    dot.style.animationDelay=Math.random()*12+"s";
+    dot.style.animationDuration=8+Math.random()*10+"s";
+
+    container.appendChild(dot);
+
+}
+   //curser
    const dot = document.createElement("div");
 dot.className = "cursor-dot";
 
@@ -1886,8 +1962,8 @@ document.addEventListener("mousemove", (e) => {
 
 function animateRing(){
 
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
+    ringX += (mouseX - ringX) * 0.65;
+    ringY += (mouseY - ringY) * 0.65;
 
     ring.style.left = ringX + "px";
     ring.style.top = ringY + "px";
