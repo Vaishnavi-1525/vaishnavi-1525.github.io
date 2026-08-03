@@ -1332,7 +1332,7 @@
        </div>
       </div>
 
-       </div>
+       
       </div>
      </div>
     </div>
@@ -2095,432 +2095,369 @@
 
   <script>
 
-   /* education line Moving Circle */
+   <script>
 
+   /* education/experience line Moving Circle */
    function updateTimelineOrbs(){
-  var anchor = window.innerHeight * 0.65;
-  document.querySelectorAll('.timeline-wrap').forEach(function(wrap){
-    var track = wrap.querySelector('.timeline-track');
-    var fill = wrap.querySelector('.timeline-fill');
-    var orb = wrap.querySelector('.timeline-orb');
-    var rect = track.getBoundingClientRect();
-    var total = rect.height;
-    var progress = anchor - rect.top;
-    progress = Math.max(0, Math.min(progress, total));
-    fill.style.height = progress + 'px';
-    orb.style.top = (progress - 11) + 'px';
-  });
-}
+     var anchor = window.innerHeight * 0.65;
+     document.querySelectorAll('.timeline-wrap').forEach(function(wrap){
+       var track = wrap.querySelector('.timeline-track');
+       var fill = wrap.querySelector('.timeline-fill');
+       var orb = wrap.querySelector('.timeline-orb');
+       var rect = track.getBoundingClientRect();
+       var total = rect.height;
+       var progress = anchor - rect.top;
+       progress = Math.max(0, Math.min(progress, total));
+       fill.style.height = progress + 'px';
+       orb.style.top = (progress - 11) + 'px';
+     });
+   }
 
+   // Scroll reveal animations (ONLY ONE COPY of this function now)
    function handleScrollReveal() {
-  var reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
-  reveals.forEach(function(el) {
-    var rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.85) {
-      el.classList.add('visible');
-    }
-  });
-  var skillBars = document.querySelectorAll('.skill-progress');
-  skillBars.forEach(function(bar) {
-    var rect = bar.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.9) {
-      var progress = bar.dataset.progress;
-      bar.style.transform = 'scaleX(' + (progress / 100) + ')';
-    }
-  });
-  updateTimelineOrbs(); // 👈 add this line
-}
+     var reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
+     reveals.forEach(function(el) {
+       var rect = el.getBoundingClientRect();
+       if (rect.top < window.innerHeight * 0.85) {
+         el.classList.add('visible');
+       }
+     });
+     var skillBars = document.querySelectorAll('.skill-progress');
+     skillBars.forEach(function(bar) {
+       var rect = bar.getBoundingClientRect();
+       if (rect.top < window.innerHeight * 0.9) {
+         var progress = bar.dataset.progress;
+         bar.style.transform = 'scaleX(' + (progress / 100) + ')';
+       }
+     });
+     updateTimelineOrbs();
+   }
+
+   document.querySelector('.app-wrapper').addEventListener('scroll', handleScrollReveal);
+   window.addEventListener('load', handleScrollReveal);
+
    /* ============================
-   Tiny Glowing Dots
-============================ */
+      Tiny Glowing Dots
+   ============================ */
+   const particleContainer = document.querySelector(".micro-particles");
+   if (particleContainer) {
+       for (let i = 0; i < 120; i++) {
+           const dot = document.createElement("span");
+           dot.style.left = Math.random() * 100 + "%";
+           dot.style.top = Math.random() * 100 + "%";
+           dot.style.animationDelay = (Math.random() * 12) + "s";
+           dot.style.animationDuration = (8 + Math.random() * 10) + "s";
+           particleContainer.appendChild(dot);
+       }
+   }
 
-const particleContainer = document.querySelector(".micro-particles");
+   /* ============================
+      Custom Cursor
+   ============================ */
+   const cursorDot = document.createElement("div");
+   cursorDot.className = "cursor-dot";
+   const cursorRing = document.createElement("div");
+   cursorRing.className = "cursor-ring";
+   document.body.appendChild(cursorDot);
+   document.body.appendChild(cursorRing);
 
-if (particleContainer) {
+   let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
 
-    for (let i = 0; i < 120; i++) {
+   document.addEventListener("mousemove", function (e) {
+       mouseX = e.clientX;
+       mouseY = e.clientY;
+       cursorDot.style.left = mouseX + "px";
+       cursorDot.style.top = mouseY + "px";
+   });
 
-        const dot = document.createElement("span");
+   function animateCursor() {
+       ringX += (mouseX - ringX) * 0.35;
+       ringY += (mouseY - ringY) * 0.35;
+       cursorRing.style.left = ringX + "px";
+       cursorRing.style.top = ringY + "px";
+       requestAnimationFrame(animateCursor);
+   }
+   animateCursor();
 
-        dot.style.left = Math.random() * 100 + "%";
-        dot.style.top = Math.random() * 100 + "%";
+   document.querySelectorAll("a, button, .project-card").forEach(function (el) {
+       el.addEventListener("mouseenter", function () { cursorRing.classList.add("hover"); });
+       el.addEventListener("mouseleave", function () { cursorRing.classList.remove("hover"); });
+   });
 
-        dot.style.animationDelay = (Math.random() * 12) + "s";
-        dot.style.animationDuration = (8 + Math.random() * 10) + "s";
+   let lastTrail = 0;
+   document.addEventListener("mousemove", function (e) {
+       const now = Date.now();
+       if (now - lastTrail < 40) return;
+       lastTrail = now;
+       const trail = document.createElement("div");
+       trail.className = "cursor-trail";
+       trail.style.left = e.clientX + "px";
+       trail.style.top = e.clientY + "px";
+       document.body.appendChild(trail);
+       setTimeout(function () { trail.remove(); }, 700);
+   });
 
-        particleContainer.appendChild(dot);
-    }
-}
+   // Certificate slider
+   var currentSlide = 0;
+   var totalSlides = 7;
+   var certTrack = document.getElementById('cert-track');
+   var certDots = document.querySelectorAll('.cert-dot');
 
-/* ============================
-   Custom Cursor
-============================ */
+   function updateSlider() {
+     certTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+     certDots.forEach(function(dot, index) {
+       dot.classList.toggle('active', index === currentSlide);
+     });
+   }
 
-const cursorDot = document.createElement("div");
-cursorDot.className = "cursor-dot";
+   document.getElementById('cert-next').addEventListener('click', function() {
+     currentSlide = (currentSlide + 1) % totalSlides;
+     updateSlider();
+   });
 
-const cursorRing = document.createElement("div");
-cursorRing.className = "cursor-ring";
+   document.getElementById('cert-prev').addEventListener('click', function() {
+     currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+     updateSlider();
+   });
 
-document.body.appendChild(cursorDot);
-document.body.appendChild(cursorRing);
+   certDots.forEach(function(dot) {
+     dot.addEventListener('click', function() {
+       currentSlide = parseInt(dot.dataset.slide);
+       updateSlider();
+     });
+   });
 
-let mouseX = 0;
-let mouseY = 0;
+   setInterval(function() {
+     currentSlide = (currentSlide + 1) % totalSlides;
+     updateSlider();
+   }, 5000);
 
-let ringX = 0;
-let ringY = 0;
+   // Mobile menu
+   var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+   var mobileMenu = document.getElementById('mobile-menu');
+   var mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-document.addEventListener("mousemove", function (e) {
+   mobileMenuBtn.addEventListener('click', function() {
+     mobileMenu.classList.toggle('hidden');
+   });
 
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+   mobileNavLinks.forEach(function(link) {
+     link.addEventListener('click', function() {
+       mobileMenu.classList.add('hidden');
+     });
+   });
 
-    cursorDot.style.left = mouseX + "px";
-    cursorDot.style.top = mouseY + "px";
+   // Toast notification
+   function showToast(message, type) {
+     type = type || 'success';
+     var toast = document.getElementById('toast');
+     toast.textContent = message;
+     toast.className = 'toast ' + type + ' show';
+     setTimeout(function() {
+       toast.classList.remove('show');
+     }, 3000);
+   }
 
-});
+   // Smooth scroll for navigation
+   document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+     anchor.addEventListener('click', function(e) {
+       e.preventDefault();
+       var target = document.querySelector(this.getAttribute('href'));
+       if (target) {
+         target.scrollIntoView({ behavior: 'smooth' });
+       }
+     });
+   });
 
-function animateCursor() {
+   // Contact form submission
+   var contactForm = document.getElementById('contact-form');
+   if (contactForm) {
+     contactForm.addEventListener('submit', function(e) {
+       var btn = contactForm.querySelector('button[type="submit"]');
+       if (btn) {
+         btn.disabled = true;
+         btn.querySelector('span').textContent = 'Sending...';
+       }
+       setTimeout(function() {
+         if (btn) {
+           btn.disabled = false;
+           btn.querySelector('span').textContent = 'Send Message';
+         }
+       }, 3000);
+     });
+   }
 
-    ringX += (mouseX - ringX) * 0.35;
-    ringY += (mouseY - ringY) * 0.35;
-
-    cursorRing.style.left = ringX + "px";
-    cursorRing.style.top = ringY + "px";
-
-    requestAnimationFrame(animateCursor);
-}
-
-animateCursor();
-
-/* Hover Effect */
-
-document.querySelectorAll("a, button, .project-card").forEach(function (el) {
-
-    el.addEventListener("mouseenter", function () {
-        cursorRing.classList.add("hover");
-    });
-
-    el.addEventListener("mouseleave", function () {
-        cursorRing.classList.remove("hover");
-    });
-
-});
-
-/* Cursor Trail (Optimized) */
-
-let lastTrail = 0;
-
-document.addEventListener("mousemove", function (e) {
-
-    const now = Date.now();
-
-    if (now - lastTrail < 40) return;
-
-    lastTrail = now;
-
-    const trail = document.createElement("div");
-
-    trail.className = "cursor-trail";
-
-    trail.style.left = e.clientX + "px";
-    trail.style.top = e.clientY + "px";
-
-    document.body.appendChild(trail);
-
-    setTimeout(function () {
-        trail.remove();
-    }, 700);
-
-});
-
-    // Scroll reveal animations
-    function handleScrollReveal() {
-      var reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
-      reveals.forEach(function(el) {
-        var rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.85) {
-          el.classList.add('visible');
-        }
-      });
-      // Animate skill bars
-      var skillBars = document.querySelectorAll('.skill-progress');
-      skillBars.forEach(function(bar) {
-        var rect = bar.getBoundingClientRect();
-        if (rect.top < window.innerHeight * 0.9) {
-          var progress = bar.dataset.progress;
-          bar.style.transform = 'scaleX(' + (progress / 100) + ')';
-        }
-      });
-    }
-
-    document.querySelector('.app-wrapper').addEventListener('scroll', handleScrollReveal);
-    window.addEventListener('load', handleScrollReveal);
-
-    // Certificate slider
-    var currentSlide = 0;
-    var totalSlides = 7;
-    var certTrack = document.getElementById('cert-track');
-    var certDots = document.querySelectorAll('.cert-dot');
-
-    function updateSlider() {
-      certTrack.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
-      certDots.forEach(function(dot, index) {
-        dot.classList.toggle('active', index === currentSlide);
-      });
-    }
-
-    document.getElementById('cert-next').addEventListener('click', function() {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateSlider();
-    });
-
-    document.getElementById('cert-prev').addEventListener('click', function() {
-      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-      updateSlider();
-    });
-
-    certDots.forEach(function(dot) {
-      dot.addEventListener('click', function() {
-        currentSlide = parseInt(dot.dataset.slide);
-        updateSlider();
-      });
-    });
-
-    // Auto-slide
-    setInterval(function() {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateSlider();
-    }, 5000);
-
-    // Mobile menu
-    var mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    var mobileMenu = document.getElementById('mobile-menu');
-    var mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
-
-    mobileMenuBtn.addEventListener('click', function() {
-      mobileMenu.classList.toggle('hidden');
-    });
-
-    mobileNavLinks.forEach(function(link) {
-      link.addEventListener('click', function() {
-        mobileMenu.classList.add('hidden');
-      });
-    });
-
-    // Toast notification
-    function showToast(message, type) {
-      type = type || 'success';
-      var toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = 'toast ' + type + ' show';
-      setTimeout(function() {
-        toast.classList.remove('show');
-      }, 3000);
-    }
-
-    // Smooth scroll for navigation
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
-      });
-    });
-
-    // Contact form submission
-    var contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-      contactForm.addEventListener('submit', function(e) {
-        var btn = contactForm.querySelector('button[type="submit"]');
-        if (btn) {
-          btn.disabled = true;
-          btn.querySelector('span').textContent = 'Sending...';
-        }
-        // Allow native form submission to Formspree
-        setTimeout(function() {
-          if (btn) {
-            btn.disabled = false;
-            btn.querySelector('span').textContent = 'Send Message';
-          }
-        }, 3000);
-      });
-    }
-
-    // Project Data
-    var projectsData = [
-      {
-        title: 'ClauseAI – an AI-powered Contract Risk Analysis System',
-        description: 'ClauseAI is designed to analyze legal contracts the way real-world professionals do. Instead of relying on a single AI response, it uses a multi-agent pipeline where different AI agents simulate domain experts — Legal, Finance, Compliance, and Operations.',
-        images: ['Img/clauseAi1.png', 'Img/clauseAi2.png', 'Img/clauseAi3.png'],
-        features: [
-          'Multi-Agent AI Architecture (LangGraph-based execution)',
-          'RAG-powered document understanding (Pinecone + embeddings)',
-          'Domain-wise risk detection (Legal, Finance, Compliance, Operations)',
-          'Clause-level risk extraction & highlighting',
-          'AI Chatbot: "Ask anything from your contract"',
-          'Smart summarization for quick decision-making',
-          'Dynamic risk scoring system',
-          'PDF & DOCX report generation with tone control',
-          'Firebase Authentication (Login/Register/Session)',
-          'User-based report history & downloads',
-          'Clean UI with real-time processing pipeline'
-        ],
-        technologies: ['HTML', 'Tailwind CSS', 'Python Flask', 'APIs', 'RAG: Pinecone', 'JavaScript', 'Sentence Transformers', 'Google Gemini + Groq (LLaMA 3)', 'LangGraph'],
-        role: 'Full Stack AI Developer (Backend + Frontend + AI Architecture)',
-        outcome: 'The project automates contract analysis by using a multi-agent AI system that understands, analyzes, and identifies risks across legal, financial, compliance, and operational domains. It processes documents using RAG, highlights risky clauses, generates structured reports (PDF/DOCX), and allows users to interact with their contracts through an AI chatbot for real-time insights.'
-      },
+   // Project Data
+   var projectsData = [
      {
-        title: 'GramLink-AI: Intelligent Rural Governance and Citizen Connect System',
-        description: 'GramLink AI is an AI-powered digital governance platform that helps rural citizens access government schemes, submit grievances, track village projects, find jobs, and stay informed through a simple, multilingual interface.',
-        images: ['Img/gramlinkai.png', 'Img/gramlinkai2.png', 'Img/gramlinkai3.png'],
-        features: [
-          'AI-powered chatbot for instant citizen queries',
-          'Real-time grievance submission and status tracking',
-          'Government scheme discovery with personalized suggestions',
-          'Village project progress updates with photos and documents',
-          'Multi-language support (Marathi, Hindi, English)',
-          'Event management and citizen registration',
-          'Transparent fund allocation and utilization tracking',
-          'Admin dashboard for managing users, schemes, grievances, and jobs',
-          'Reports & statistics with charts and downloadable formats'
-        ],
-        technologies: ['JAVA', 'CSS', 'HTML', 'FIREBASE', 'MYSQL', 'BiLSTM Algorithm', 'Deep Learning'],
-        role: 'Team Lead, Front + Back end Developer',
-        outcome: 'GramLink AI empowers rural citizens to access government schemes, submit grievances, track village projects, and stay informed through a simple, multilingual platform. It enhances transparency, citizen engagement, and efficiency in local governance using AI-powered assistance and real-time updates.'
-      },
+       title: 'ClauseAI – an AI-powered Contract Risk Analysis System',
+       description: 'ClauseAI is designed to analyze legal contracts the way real-world professionals do. Instead of relying on a single AI response, it uses a multi-agent pipeline where different AI agents simulate domain experts — Legal, Finance, Compliance, and Operations.',
+       images: ['Img/clauseAi1.png', 'Img/clauseAi2.png', 'Img/clauseAi3.png'],
+       features: [
+         'Multi-Agent AI Architecture (LangGraph-based execution)',
+         'RAG-powered document understanding (Pinecone + embeddings)',
+         'Domain-wise risk detection (Legal, Finance, Compliance, Operations)',
+         'Clause-level risk extraction & highlighting',
+         'AI Chatbot: "Ask anything from your contract"',
+         'Smart summarization for quick decision-making',
+         'Dynamic risk scoring system',
+         'PDF & DOCX report generation with tone control',
+         'Firebase Authentication (Login/Register/Session)',
+         'User-based report history & downloads',
+         'Clean UI with real-time processing pipeline'
+       ],
+       technologies: ['HTML', 'Tailwind CSS', 'Python Flask', 'APIs', 'RAG: Pinecone', 'JavaScript', 'Sentence Transformers', 'Google Gemini + Groq (LLaMA 3)', 'LangGraph'],
+       role: 'Full Stack AI Developer (Backend + Frontend + AI Architecture)',
+       outcome: 'The project automates contract analysis by using a multi-agent AI system that understands, analyzes, and identifies risks across legal, financial, compliance, and operational domains. It processes documents using RAG, highlights risky clauses, generates structured reports (PDF/DOCX), and allows users to interact with their contracts through an AI chatbot for real-time insights.'
+     },
      {
-  title: 'Personal Portfolio Website',
-  description: 'A fully responsive personal portfolio website showcasing my education, professional experience, skills, certifications, and projects — designed with a modern dark UI and smooth scroll interactions, built and deployed via GitHub Pages.',
-  images: ['Img/portfolio1.png', 'Img/portfolio2.png', 'Img/portfolio3.png'],
-  features: [
-    'Responsive, mobile-first layout across all sections',
-    'Smooth scroll navigation with active section highlighting',
-    'Dynamic project showcase with detailed modal view for each project',
-    'Animated skill progress bars and stagger-reveal scroll animations',
-    'Certifications section with linked certificate PDFs',
-    'Contact form for direct outreach',
-    'Modern dark-themed UI with gradient accents'
-  ],
-  technologies: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'GitHub Pages'],
-  role: 'Solo Designer & Developer',
-  outcome: 'Built end-to-end to present my technical background, projects, and experience professionally to recruiters and collaborators. Serves as a live, continuously updated showcase of my growth as a developer.'
-},
-      {
-        title: 'Alumnio: Alumni Tracking System',
-        description: 'Alumni Tracking System is a web-based platform that allows colleges to manage and maintain alumni records, enabling secure registration, profile updates, networking among alumni and students, and sharing of news, events, and achievements to strengthen engagement with the institution.',
-        images: ['Img/alumni1.png', 'Img/alumni2.png', 'Img/alumni3.png'],
-        features: [
-          'Role-based access control for Admin, Alumni, and Students',
-          'Alumni registration with personal, academic, and professional details',
-          'Profile management allowing updates and edits by alumni',
-          'Searchable alumni and student directory for easy networking',
-          'News and event management for announcements and college activities',
-          'Achievements gallery to highlight alumni and institutional milestones',
-          'Mentorship and guidance features connecting alumni with current students',
-          'Secure data storage with privacy controls and restricted access',
-          'Interactive dashboards for Admin and Alumni to track activities',
-          'Email notifications and updates for events, news, and announcements'
-        ],
-        technologies: ['HTML', 'CSS', 'JavaScript', 'Bootstrap', 'MySQL', 'PHP', 'Apache'],
-        role: 'Frontend + Backend Developer',
-        outcome: 'The system enables colleges to efficiently manage alumni data, improve engagement through networking, events, and mentorship, and provides a secure, organized platform for maintaining long-term alumni relationships.'
-      },
-      {
-        title: 'Traffic Congestion Predictor',
-        description: 'Traffic Congestion Predictor is a web application that allows users to predict traffic congestion levels (Low, Medium, High) based on inputs like time, location, and weather conditions. It helps commuters plan their travel by providing quick, real-time traffic predictions.',
-        images: ['Img/traffic1.png', 'Img/traffic2.png', 'Img/traffic3.png'],
-        features: [
-          'Predicts traffic congestion levels as Low, Medium, or High',
-          'Accepts user input for time, location, and weather conditions',
-          'Real-time prediction to help commuters plan their travel',
-          'Stores traffic data for analysis and future reference',
-          'Provides clear and simple user interface',
-          'Handles invalid or missing inputs with error checks',
-          'Uses conditional logic and algorithms for accurate predictions',
-          'Easy to update with new locations or traffic patterns',
-          'Supports day and night time input handling',
-          'Lightweight application requiring minimal system resources'
-        ],
-        technologies: ['HTML', 'CSS', 'Python Flask', 'APIs', 'Machine Learning Libraries', 'JavaScript', 'Bootstrap'],
-        role: 'Team Lead, Backend + Frontend Developer',
-        outcome: 'The project predicts traffic congestion in a city (like Nashik) based on real-time weather data, location, and time, and displays live traffic congestion on Google Maps.'
-      }
-      
-    ];
+       title: 'GramLink-AI: Intelligent Rural Governance and Citizen Connect System',
+       description: 'GramLink AI is an AI-powered digital governance platform that helps rural citizens access government schemes, submit grievances, track village projects, find jobs, and stay informed through a simple, multilingual interface.',
+       images: ['Img/gramlinkai.png', 'Img/gramlinkai2.png', 'Img/gramlinkai3.png'],
+       features: [
+         'AI-powered chatbot for instant citizen queries',
+         'Real-time grievance submission and status tracking',
+         'Government scheme discovery with personalized suggestions',
+         'Village project progress updates with photos and documents',
+         'Multi-language support (Marathi, Hindi, English)',
+         'Event management and citizen registration',
+         'Transparent fund allocation and utilization tracking',
+         'Admin dashboard for managing users, schemes, grievances, and jobs',
+         'Reports & statistics with charts and downloadable formats'
+       ],
+       technologies: ['JAVA', 'CSS', 'HTML', 'FIREBASE', 'MYSQL', 'BiLSTM Algorithm', 'Deep Learning'],
+       role: 'Team Lead, Front + Back end Developer',
+       outcome: 'GramLink AI empowers rural citizens to access government schemes, submit grievances, track village projects, and stay informed through a simple, multilingual platform. It enhances transparency, citizen engagement, and efficiency in local governance using AI-powered assistance and real-time updates.'
+     },
+     {
+       title: 'Personal Portfolio Website',
+       description: 'A fully responsive personal portfolio website showcasing my education, professional experience, skills, certifications, and projects — designed with a modern dark UI and smooth scroll interactions, built and deployed via GitHub Pages.',
+       images: ['Img/portfolio1.png', 'Img/portfolio2.png', 'Img/portfolio3.png'],
+       features: [
+         'Responsive, mobile-first layout across all sections',
+         'Smooth scroll navigation with active section highlighting',
+         'Dynamic project showcase with detailed modal view for each project',
+         'Animated skill progress bars and stagger-reveal scroll animations',
+         'Certifications section with linked certificate PDFs',
+         'Contact form for direct outreach',
+         'Modern dark-themed UI with gradient accents'
+       ],
+       technologies: ['HTML', 'CSS', 'JavaScript', 'Tailwind CSS', 'GitHub Pages'],
+       role: 'Solo Designer & Developer',
+       outcome: 'Built end-to-end to present my technical background, projects, and experience professionally to recruiters and collaborators. Serves as a live, continuously updated showcase of my growth as a developer.'
+     },
+     {
+       title: 'Alumnio: Alumni Tracking System',
+       description: 'Alumni Tracking System is a web-based platform that allows colleges to manage and maintain alumni records, enabling secure registration, profile updates, networking among alumni and students, and sharing of news, events, and achievements to strengthen engagement with the institution.',
+       images: ['Img/alumni1.png', 'Img/alumni2.png', 'Img/alumni3.png'],
+       features: [
+         'Role-based access control for Admin, Alumni, and Students',
+         'Alumni registration with personal, academic, and professional details',
+         'Profile management allowing updates and edits by alumni',
+         'Searchable alumni and student directory for easy networking',
+         'News and event management for announcements and college activities',
+         'Achievements gallery to highlight alumni and institutional milestones',
+         'Mentorship and guidance features connecting alumni with current students',
+         'Secure data storage with privacy controls and restricted access',
+         'Interactive dashboards for Admin and Alumni to track activities',
+         'Email notifications and updates for events, news, and announcements'
+       ],
+       technologies: ['HTML', 'CSS', 'JavaScript', 'Bootstrap', 'MySQL', 'PHP', 'Apache'],
+       role: 'Frontend + Backend Developer',
+       outcome: 'The system enables colleges to efficiently manage alumni data, improve engagement through networking, events, and mentorship, and provides a secure, organized platform for maintaining long-term alumni relationships.'
+     },
+     {
+       title: 'Traffic Congestion Predictor',
+       description: 'Traffic Congestion Predictor is a web application that allows users to predict traffic congestion levels (Low, Medium, High) based on inputs like time, location, and weather conditions. It helps commuters plan their travel by providing quick, real-time traffic predictions.',
+       images: ['Img/traffic1.png', 'Img/traffic2.png', 'Img/traffic3.png'],
+       features: [
+         'Predicts traffic congestion levels as Low, Medium, or High',
+         'Accepts user input for time, location, and weather conditions',
+         'Real-time prediction to help commuters plan their travel',
+         'Stores traffic data for analysis and future reference',
+         'Provides clear and simple user interface',
+         'Handles invalid or missing inputs with error checks',
+         'Uses conditional logic and algorithms for accurate predictions',
+         'Easy to update with new locations or traffic patterns',
+         'Supports day and night time input handling',
+         'Lightweight application requiring minimal system resources'
+       ],
+       technologies: ['HTML', 'CSS', 'Python Flask', 'APIs', 'Machine Learning Libraries', 'JavaScript', 'Bootstrap'],
+       role: 'Team Lead, Backend + Frontend Developer',
+       outcome: 'The project predicts traffic congestion in a city (like Nashik) based on real-time weather data, location, and time, and displays live traffic congestion on Google Maps.'
+     }
+   ];
 
-    var currentImageSlide = 0;
+   var currentImageSlide = 0;
 
-    function openProjectModal(projectIndex) {
-      var project = projectsData[projectIndex];
-      currentImageSlide = 0;
+   function openProjectModal(projectIndex) {
+     var project = projectsData[projectIndex];
+     currentImageSlide = 0;
 
-      document.getElementById('modal-project-title').textContent = project.title;
-      document.getElementById('modal-description').textContent = project.description;
-      document.getElementById('modal-outcome').textContent = 'Role: ' + project.role + '\n\nOutcome: ' + project.outcome;
+     document.getElementById('modal-project-title').textContent = project.title;
+     document.getElementById('modal-description').textContent = project.description;
+     document.getElementById('modal-outcome').textContent = 'Role: ' + project.role + '\n\nOutcome: ' + project.outcome;
 
-      var featuresList = document.getElementById('modal-features');
-      featuresList.innerHTML = project.features.map(function(feature) {
-        return '<li class="feature-item">' + feature + '</li>';
-      }).join('');
+     var featuresList = document.getElementById('modal-features');
+     featuresList.innerHTML = project.features.map(function(feature) {
+       return '<li class="feature-item">' + feature + '</li>';
+     }).join('');
 
-      var techContainer = document.getElementById('modal-tech');
-      techContainer.innerHTML = project.technologies.map(function(tech) {
-        return '<span class="tech-tag">' + tech + '</span>';
-      }).join('');
+     var techContainer = document.getElementById('modal-tech');
+     techContainer.innerHTML = project.technologies.map(function(tech) {
+       return '<span class="tech-tag">' + tech + '</span>';
+     }).join('');
 
-      var track = document.getElementById('images-track');
-      track.innerHTML = project.images.map(function(img) {
-        return '<div style="min-width:100%"><img src="' + img + '" class="w-full h-full object-cover rounded-xl" style="height:300px;" onerror="this.parentElement.style.display=\'none\'"></div>';
-      }).join('');
+     var track = document.getElementById('images-track');
+     track.innerHTML = project.images.map(function(img) {
+       return '<div style="min-width:100%"><img src="' + img + '" class="w-full h-full object-cover rounded-xl" style="height:300px;" onerror="this.parentElement.style.display=\'none\'"></div>';
+     }).join('');
 
-      document.getElementById('project-modal').classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      updateImageSlider();
-    }
+     document.getElementById('project-modal').classList.remove('hidden');
+     document.body.style.overflow = 'hidden';
+     updateImageSlider();
+   }
 
-    function closeProjectModal() {
-      document.getElementById('project-modal').classList.add('hidden');
-      document.body.style.overflow = 'auto';
-    }
+   function closeProjectModal() {
+     document.getElementById('project-modal').classList.add('hidden');
+     document.body.style.overflow = 'auto';
+   }
 
-    function updateImageSlider() {
-      var track = document.getElementById('images-track');
-      track.style.transform = 'translateX(-' + (currentImageSlide * 100) + '%)';
-    }
+   function updateImageSlider() {
+     var track = document.getElementById('images-track');
+     track.style.transform = 'translateX(-' + (currentImageSlide * 100) + '%)';
+   }
 
-    document.getElementById('image-prev').addEventListener('click', function() {
-      currentImageSlide = Math.max(0, currentImageSlide - 1);
-      updateImageSlider();
-    });
+   document.getElementById('image-prev').addEventListener('click', function() {
+     currentImageSlide = Math.max(0, currentImageSlide - 1);
+     updateImageSlider();
+   });
 
-    document.getElementById('image-next').addEventListener('click', function() {
-      var totalImages = document.getElementById('images-track').children.length - 1;
-      currentImageSlide = Math.min(totalImages, currentImageSlide + 1);
-      updateImageSlider();
-    });
+   document.getElementById('image-next').addEventListener('click', function() {
+     var totalImages = document.getElementById('images-track').children.length - 1;
+     currentImageSlide = Math.min(totalImages, currentImageSlide + 1);
+     updateImageSlider();
+   });
 
-    document.getElementById('modal-close').addEventListener('click', closeProjectModal);
+   document.getElementById('modal-close').addEventListener('click', closeProjectModal);
 
-    document.getElementById('project-modal').addEventListener('click', function(e) {
-      if (e.target.id === 'project-modal') closeProjectModal();
-    });
+   document.getElementById('project-modal').addEventListener('click', function(e) {
+     if (e.target.id === 'project-modal') closeProjectModal();
+   });
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && !document.getElementById('project-modal').classList.contains('hidden')) {
-        closeProjectModal();
-      }
-    });
+   document.addEventListener('keydown', function(e) {
+     if (e.key === 'Escape' && !document.getElementById('project-modal').classList.contains('hidden')) {
+       closeProjectModal();
+     }
+   });
 
-    document.querySelectorAll('.project-card').forEach(function(card) {
-      card.addEventListener('click', function() {
-        var projectIndex = parseInt(card.dataset.project);
-        openProjectModal(projectIndex);
-      });
-    });
+   document.querySelectorAll('.project-card').forEach(function(card) {
+     card.addEventListener('click', function() {
+       var projectIndex = parseInt(card.dataset.project);
+       openProjectModal(projectIndex);
+     });
+   });
+</script>
   </script>
  </body>
 </html>
