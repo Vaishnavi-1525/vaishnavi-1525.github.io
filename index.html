@@ -1040,6 +1040,42 @@
   70% { box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
   100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
+
+.gradient-tagline{
+  background: linear-gradient(90deg, #a78bfa, #FF7A59);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+.timeline-wrap{ position: relative; padding-left: 40px; }
+.timeline-track{
+  position: absolute; left: 8px; top: 6px; bottom: 6px; width: 2px;
+  background: rgba(255,255,255,0.1);
+}
+.timeline-fill{
+  position: absolute; top: 0; left: 0; width: 100%; height: 0;
+  background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+  box-shadow: 0 0 10px rgba(139,92,246,0.6);
+  transition: height .12s linear;
+}
+.timeline-orb{
+  position: absolute; left: -7px; top: -11px; width: 22px; height: 22px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff, var(--accent-primary) 55%, var(--accent-secondary) 130%);
+  box-shadow: 0 0 18px 4px rgba(139,92,246,.75), 0 0 4px rgba(255,255,255,.9);
+  transition: top .12s linear;
+  z-index: 3;
+}
+.timeline-orb::after{
+  content:''; position:absolute; inset:-6px; border-radius:50%;
+  border: 2px solid rgba(139,92,246,.35);
+  animation: orbPulse 1.8s ease-out infinite;
+}
+@keyframes orbPulse{
+  0%{ transform:scale(.8); opacity:.8; }
+  100%{ transform:scale(1.6); opacity:0; }
+}
    
   </style>
   
@@ -1110,9 +1146,10 @@
       </h1>
      
         <div class="reveal-text reveal-text-delay-1 mb-6">
-            <span class="text-sm md:text-base uppercase tracking-[0.3em] text-cyan-400 font-medium">
-                CRAFTING SOFTWARE, ONE LINE AT A TIME
-            </span>
+            <!-- AFTER -->
+<span class="text-sm md:text-base uppercase tracking-[0.3em] gradient-tagline font-medium">
+    CRAFTING SOFTWARE, ONE LINE AT A TIME
+</span>
         </div>
 
         <h1 class="reveal-text reveal-text-delay-2 mb-6">
@@ -1234,7 +1271,9 @@
       <span class="text-sm uppercase tracking-[0.3em] text-cyan-400 font-medium">Academic Background</span>
       <h2 class="section-title mt-4">Education &amp; <span class="gradient-text">Learning</span></h2>
      </div>
-     <div class="space-y-8">
+     <div class="timeline-wrap">
+  <div class="timeline-track"><div class="timeline-fill"></div><div class="timeline-orb"></div></div>
+  <div class="space-y-8">
 
       <!-- Education Card 1 -->
       <div class="scroll-reveal stagger-1 p-8 rounded-3xl relative overflow-hidden" style="background: linear-gradient(135deg, var(--surface) 0%, rgba(19,19,26,0.8) 100%); border: 1px solid rgba(139, 92, 246, 0.2);">
@@ -1248,7 +1287,7 @@
          <h3 class="text-2xl font-bold mb-2">Bachelor of Engineering - Information Technology</h3>
          <p class="text-cyan-400 font-medium mb-3">Pune Vidyarthi Griha's College of Engineering, Nashik</p>
          <div class="flex flex-wrap gap-4 text-sm">
-          <span class="flex items-center gap-2 text-gray-300"><svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>SGPA:9.47/10 | CGPA: 8.83/10</span>
+          <span class="flex items-center gap-2 text-gray-300"><svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>SGPA:9.47/10      |      CGPA: 8.83/10</span>
           <span class="flex items-center gap-2 text-gray-300"><svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg> Nashik, Maharashtra</span>
          </div>
         </div>
@@ -1293,6 +1332,8 @@
        </div>
       </div>
 
+       </div>
+      </div>
      </div>
     </div>
    </section>
@@ -2053,6 +2094,42 @@
   </div>
 
   <script>
+
+   /* education line Moving Circle */
+
+   function updateTimelineOrbs(){
+  var anchor = window.innerHeight * 0.65;
+  document.querySelectorAll('.timeline-wrap').forEach(function(wrap){
+    var track = wrap.querySelector('.timeline-track');
+    var fill = wrap.querySelector('.timeline-fill');
+    var orb = wrap.querySelector('.timeline-orb');
+    var rect = track.getBoundingClientRect();
+    var total = rect.height;
+    var progress = anchor - rect.top;
+    progress = Math.max(0, Math.min(progress, total));
+    fill.style.height = progress + 'px';
+    orb.style.top = (progress - 11) + 'px';
+  });
+}
+
+   function handleScrollReveal() {
+  var reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right');
+  reveals.forEach(function(el) {
+    var rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.85) {
+      el.classList.add('visible');
+    }
+  });
+  var skillBars = document.querySelectorAll('.skill-progress');
+  skillBars.forEach(function(bar) {
+    var rect = bar.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.9) {
+      var progress = bar.dataset.progress;
+      bar.style.transform = 'scaleX(' + (progress / 100) + ')';
+    }
+  });
+  updateTimelineOrbs(); // 👈 add this line
+}
    /* ============================
    Tiny Glowing Dots
 ============================ */
