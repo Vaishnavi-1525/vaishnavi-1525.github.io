@@ -216,35 +216,7 @@ body{background:var(--bg);color:var(--tx);font-family:Outfit,sans-serif;overflow
 .tmf span{display:flex;align-items:center;gap:7px}
 .tcu{display:inline-block;width:8px;height:1em;background:var(--b);vertical-align:-.15em;margin-left:2px;animation:cb .75s step-end infinite}
 
-/* bug-hunt hero card */
-.bw{border-radius:20px;background:#0d1117;border:1px solid rgba(139,92,246,.4);overflow:hidden;box-shadow:0 40px 90px -30px rgba(139,92,246,.6)}
-.bwh{display:flex;align-items:center;gap:7px;padding:11px 14px;background:#161b22;border-bottom:1px solid rgba(255,255,255,.06)}
-.bwh>i{width:11px;height:11px;border-radius:50%}
-.bwu{flex:1;margin:0 8px;padding:4px 12px;border-radius:8px;background:#0d1117;font-size:.7rem;color:#8b949e;white-space:nowrap;overflow:hidden}
-.bwc{font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:999px;background:rgba(248,113,113,.15);color:#fca5a5;border:1px solid rgba(248,113,113,.4);white-space:nowrap;transition:.4s}
-.bwc.ok{background:rgba(74,222,128,.15);color:#86efac;border-color:rgba(74,222,128,.5)}
-.bwb{padding:22px 22px 8px}
-.bwb h4{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#fff}
-.bs{font-size:.82rem;color:#9ca3af;margin:2px 0 16px}
-.bl{display:block;font-size:.72rem;color:#9ca3af;margin:10px 0 5px}
-.fk{padding:11px 14px;border-radius:10px;background:#161b22;border:1px solid rgba(255,255,255,.1);font-size:.9rem;color:#e5e7eb;transition:.3s}
-.fk.err{border-color:#f87171;box-shadow:0 0 0 3px rgba(248,113,113,.12)}
-.bhint{font-size:.72rem;color:#fbbf24;height:0;overflow:hidden;opacity:0;transition:.35s}.fk.err+.bhint{height:20px;opacity:1;padding-top:5px}
-.bbtn{text-align:center;padding:12px;border-radius:12px;font-weight:600;color:#fff;background:linear-gradient(135deg,var(--a),#7c3aed);transition:.4s}
-.bbtn.off{background:rgba(255,255,255,.08);color:#6b7280;cursor:not-allowed}
-.bx{position:relative}
-.bd{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;border:2px solid #0d1117;background:#ef4444;cursor:pointer;z-index:3;animation:bdp 1.8s infinite;color:#fff;font-size:.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:transform .2s}
-.bd:hover{transform:scale(1.25)}.bd.sel{outline:2px solid #fff;outline-offset:2px}
-.bd.ok{background:#22c55e;animation:none}.bd.ok:after{content:'✓'}
-@keyframes bdp{0%{box-shadow:0 0 0 0 rgba(239,68,68,.7)}70%{box-shadow:0 0 0 10px transparent}}
-.bpn{margin:10px 16px 16px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);font-size:.82rem;color:#cbd5e1;line-height:1.55;min-height:92px;font-family:ui-monospace,Menlo,Consolas,monospace}
-.bpn .bid{display:inline-block;font-weight:700;color:#fff;margin-right:8px}
-.bpn .sv{font-size:.68rem;padding:2px 9px;border-radius:999px;border:1px solid}
-.bpn button,.bpn a{margin-top:10px;margin-right:8px;font:inherit;font-size:.78rem;font-weight:600;padding:7px 14px;border-radius:10px;cursor:pointer;border:1px solid rgba(6,182,212,.6);background:rgba(6,182,212,.12);color:#67e8f9;display:inline-block;transition:.25s}
-.bpn button:hover,.bpn a:hover{background:rgba(6,182,212,.28)}
-.bpn.win{border:1px solid rgba(74,222,128,.55);background:rgba(74,222,128,.08)}
-.cf{position:absolute;left:50%;top:60%;width:7px;height:11px;border-radius:2px;pointer-events:none;z-index:9;animation:cfa 1.3s ease-out forwards}
-@keyframes cfa{to{transform:translate(var(--dx),var(--dy)) rotate(540deg);opacity:0}}
+
 
 /* hero v3 */
 .rings{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;transition:transform .25s ease-out}
@@ -397,6 +369,7 @@ var SK=[
 ['Web Technologies','#f472b6',[['HTML',90],['CSS',85],['Bootstrap',75],['Flask',75]]],
 ['AI & ML','#fb923c',[['Generative AI',85],['RAG & Vector DB (Pinecone)',75],['LangGraph / LangChain',80],['Sentence Transformers',75],['Multi-Agent Systems',80],['API Integration',85]],1]];
 var CERTS=[
+['GramLink AI – Copyright Registration','Copyright Office · Oct 2026','Copyright','Copyright_Gramlink.pdf','ipindia.png'],
 ['Infosys Springboard Virtual Internship 6.0','Infosys · Feb–May 2026','AI','Infosys.pdf','infosys.png'],
 ['AWS Cloud Foundations','AWS Academy · Jun 2025','Cloud','aws1.pdf','aws.jpg'],
 ['AWS Cloud Architecting','AWS Academy · Feb 2026','Cloud','aws2.pdf','aws.jpg'],
@@ -413,7 +386,7 @@ k:['Python','RAG Architecture','Pinecone','LangGraph','Gemini AI'],tech:['HTML',
 r:'Full Stack AI Developer (Backend + Frontend + AI Architecture)',o:'The project automates contract analysis by using a multi-agent AI system that understands, analyzes, and identifies risks across legal, financial, compliance, and operational domains. It processes documents using RAG, highlights risky clauses, generates structured reports (PDF/DOCX), and allows users to interact with their contracts through an AI chatbot for real-time insights.'},
 {t:'GramLink-AI: Intelligent Rural Governance and Citizen Connect System',tag:'Academic Final Year Engineering project',cat:'ai web academic',short:'An AI-powered platform connecting villages with government services and information',ctx:'Academic Project · Final Year Engineering Project',im:['gramlinkai','gramlinkai2','gramlinkai3'],
 d:'GramLink AI is an AI-powered digital governance platform that helps rural citizens access government schemes, submit grievances, track village projects, find jobs, and stay informed through a simple, multilingual interface.',
-f:['AI-powered chatbot for instant citizen queries','Real-time grievance submission and status tracking','Government scheme discovery with personalized suggestions','Village project progress updates with photos and documents','Multi-language support (Marathi, Hindi, English)','Event management and citizen registration','Transparent fund allocation and utilization tracking','Admin dashboard for managing users, schemes, grievances, and jobs','Reports & statistics with charts and downloadable formats'],
+f:['AI-powered chatbot for instant citizen queries','Real-time grievance submission and status tracking','Government scheme discovery with personalized suggestions','Village project progress updates with photos and documents','Multi-language support (Marathi, Hindi, English)','Event management and citizen registration','Transparent fund allocation and utilization tracking','Admin dashboard for managing users, schemes, grievances, and jobs','Reports & statistics with charts and downloadable formats','Copyright registered with the Government of India (Certificate No. LD-20260197609)'],
 k:['HTML / CSS','Deep Learning','MySQL DB'],tech:['JAVA','CSS','HTML','FIREBASE','MYSQL','BiLSTM Algorithm','Deep Learning'],r:'Team Lead, Front + Back end Developer',
 o:'GramLink AI empowers rural citizens to access government schemes, submit grievances, track village projects, and stay informed through a simple, multilingual platform. It enhances transparency, citizen engagement, and efficiency in local governance using AI-powered assistance and real-time updates.'},
 {t:'Personal Portfolio Website',tag:'Personal project',cat:'web personal',short:'A modern, responsive portfolio site showcasing my skills, experience, and projects',ctx:'Independent Project',im:['portfolio1','portfolio2','portfolio3'],
@@ -466,6 +439,7 @@ var INFY=[
 ['Course Name 9','Img/infosys/course9.pdf','Infosys Springboard • Month Year • 10 Hours • Online','Skill 1, Skill 2, Skill 3',['Key learning point 1.','Key learning point 2.']],
 ['Course Name 10','Img/infosys/course10.pdf','Infosys Springboard • Month Year • 10 Hours • Online','Skill 1, Skill 2, Skill 3',['Key learning point 1.','Key learning point 2.']]];
 var DET=[
+{c:'#fbbf24',t:'GramLink AI – Intelligent Rural Governance and Citizen Connect System',s:'Copyright Registration · Copyright Office, Government of India',m:'Certificate No. LD-20260197609 • Application No. LD-15994/2026-CO • Filed: 08/04/2026 • Date of ROC: 19/10/2026',k:'',l:['Copyright registered under the Copyright Act, 1957 for the work titled "GramLink AI – Intelligent Rural Governance and Citizen Connect System" (Language: English).','Co-authored and co-owned with the project team of the final-year engineering project.']},
 {c:'#4ade80',s:'Infosys SpringBoard Virtual Internship 6.0',m:'Infosys SpringBoard • Feb 2026 - May 2026 • 8 Week • Online',k:'RAG Model, AI Agents, Pinecone, Langraph, Firebase, API Integration',l:['Designed and implemented a production-grade multi-agent AI system using LangGraph with a planning agent that dynamically orchestrates specialized domain agents in parallel.','Learned practical prompt engineering techniques for structured risk extraction, tone-controlled report generation, and real-time AI chat interactions.']},
 {c:'#22d3ee',s:'AWS Cloud Foundations – Training Badge',m:'AWS Academy • June 2025 • 20 Hours • Online',k:'Cloud Basics, AWS Services Overview, Cloud Security, Billing & Pricing',l:['Strengthened core programming & logical thinking.','Industry-focused technical skill enhancement and structured problem-solving practice.']},
 {c:'#60a5fa',s:'Cloud Architecting – Training Badge',m:'AWS Academy • February 2026 • 60 Hours • Online',k:'Cloud Architecture, AWS Services, Security',l:['Designed and understood secure, scalable cloud architectures using core AWS services.','Understood cloud security best practices, monitoring, and high-availability deployment strategies.']},
@@ -485,15 +459,17 @@ function act(i){rows.forEach(function(r,j){r.classList.toggle('act',j===i)})}
 rows.forEach(function(el,i){el.onclick=function(){clearInterval(window.it);var c=INFY[i];$('#cb').classList.remove('hide');openCert(c[0],'Infosys Springboard · Learning Course',c[2],c[3],c[4],c[1],'#22d3ee')};el.onmouseenter=function(){hov=1;v.classList.add('p');act(i)}});
 v.onmouseleave=function(){hov=0;v.classList.remove('p')};
 if(rows.length){act(0);window.it=setInterval(function(){if(hov)return;ai=(ai+1)%rows.length;act(ai)},2200)}}
-$('#cb').onclick=showInfy;
+$('#cb').onclick=showInfy;function spiral(n){var R=Math.ceil(n/3),g=[],i,r,c;for(r=0;r<R;r++)g.push([-1,-1,-1]);for(i=0;i<n;i++){r=Math.floor(i/3);c=i%3;if(r===R-1&&n%3===1)c=1;g[r][c]=i}
+var o=[],t=0,b=R-1,l=0,rt=2;while(t<=b&&l<=rt){for(c=l;c<=rt;c++)o.push(g[t][c]);t++;for(r=t;r<=b;r++)o.push(g[r][rt]);rt--;if(t<=b){for(c=rt;c>=l;c--)o.push(g[b][c]);b--}if(l<=rt){for(r=b;r>=t;r--)o.push(g[r][l]);l++}}
+return o.filter(function(x){return x>=0})}
 function certs(){var g=$('#cg'),L=CERTS.slice(),cards=[],ord,ai=0,hov=0;g.innerHTML='';L.splice(4,0,null);
 function act(i){cards.forEach(function(x,j){x.classList.toggle('act',j===i)})}
-L.forEach(function(c,n){var d=document.createElement('div'),iss=c?c[1].split(' · ')[0]:'Infosys Springboard';d.className='card cc'+(c?'':' fold');d.style.cursor='pointer';
+L.forEach(function(c,n){var d=document.createElement('div'),iss=c?c[1].split(' · ')[0]:'Infosys Springboard';d.className='card cc'+(c?'':' fold');d.style.cursor='pointer';if(n===L.length-1&&L.length%3===1)d.className+=' lg:col-start-2';
 d.innerHTML='<div class="flex items-center gap-4"><div class="lg"><img src="Img/'+(c?c[4]:'infosys.png')+'" alt="'+iss+'" onerror="this.replaceWith(document.createTextNode(this.alt))"></div><div style="min-width:0"><p class="text-xs text-gray-400 mb-1">'+(c?c[1]:'Learning courses')+'</p><h3 class="font-bold leading-snug" style="font-size:.95rem">'+(c?c[0]:'Infosys Springboard – Learning Courses')+'</h3></div></div><div class="flex justify-end mt-4 text-xs"><span class="text-cyan-400">'+(c?'View certificate ↗':'Browse all ↗')+'</span></div>';
 d.onclick=function(){if(!c){$('#cmod').classList.remove('hide');showInfy();return}var D=c.det;$('#cb').classList.add('hide');openCert(D.t||c[0],D.s,D.m,D.k,D.l,'Img/'+c[3],D.c);$('#cmod').classList.remove('hide')};
 d.onmouseenter=function(){hov=1;g.classList.add('p');act(n)};cards.push(d);g.appendChild(d)});
 g.onmouseleave=function(){hov=0;g.classList.remove('p')};
-ord=L.length===9?[0,1,2,5,8,7,6,3,4]:L.map(function(_,i){return i});
+ord=spiral(L.length);
 clearInterval(window.ct);act(ord[0]);window.ct=setInterval(function(){if(hov)return;ai=(ai+1)%ord.length;act(ord[ai])},2800)}
 function filters(box,list,fn){list.forEach(function(n,i){var lab=Array.isArray(n)?n[0]:n,val=Array.isArray(n)?n[1]:n;var b=document.createElement('button');b.className='fb'+(i?'':' active');b.textContent=lab;b.onclick=function(){box.querySelectorAll('.fb').forEach(function(x){x.classList.remove('active')});b.classList.add('active');fn(val)};box.appendChild(b)})}
 certs();
